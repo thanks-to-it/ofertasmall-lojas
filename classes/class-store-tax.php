@@ -18,7 +18,7 @@ if ( ! class_exists( 'TxToIT\OML\Store_Tax' ) ) {
 
 		public static $taxonomy = 'lojas-categorias';
 
-		public static function register_taxonomy() {
+		public static function register_taxonomy( $cpt ) {
 			// Add new taxonomy, make it hierarchical (like categories)
 			$labels = array(
 				'name'              => _x( 'Categories', 'taxonomy general name', 'textdomain' ),
@@ -43,7 +43,7 @@ if ( ! class_exists( 'TxToIT\OML\Store_Tax' ) ) {
 				'rewrite'           => array( 'slug' => 'categoria' ),
 			);
 
-			register_taxonomy( self::$taxonomy, array( Store_CPT::$post_type ), $args );
+			register_taxonomy( self::$taxonomy, array( $cpt ), $args );
 		}
 	}
 }

@@ -30,7 +30,12 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Tools' ) ) {
 				return;
 			}
 
-			Functions::import_stores();
+			$import = new Import( array(
+				'stores_post_type' => Store_CPT::$post_type,
+				'stores_tax'       => Store_Tax::$taxonomy
+			) );
+			$import->import_stores();
+			//Import::import_stores();
 		}
 
 		public static function plugin_page() {

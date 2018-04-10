@@ -114,7 +114,7 @@ class ComposerStaticInitd1bd3c1f2463e3f0ea08ade016ef5ede
         'TxToIT\\OML\\Admin_Tools' => __DIR__ . '/../..' . '/classes/class-admin-tools.php',
         'TxToIT\\OML\\Core' => __DIR__ . '/../..' . '/classes/class-core.php',
         'TxToIT\\OML\\Custom_Admin_Settings' => __DIR__ . '/../..' . '/classes/class-custom-settings-api.php',
-        'TxToIT\\OML\\Functions' => __DIR__ . '/../..' . '/classes/class-functions.php',
+        'TxToIT\\OML\\Import' => __DIR__ . '/../..' . '/classes/class-import.php',
         'TxToIT\\OML\\Ofertasmall_Stores_API' => __DIR__ . '/../..' . '/classes/class-ofertasmall-stores-api.php',
         'TxToIT\\OML\\Store_CPT' => __DIR__ . '/../..' . '/classes/class-store-cpt.php',
         'TxToIT\\OML\\Store_Tax' => __DIR__ . '/../..' . '/classes/class-store-tax.php',

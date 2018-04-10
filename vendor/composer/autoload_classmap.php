@@ -99,7 +99,7 @@ return array(
     'TxToIT\\OML\\Admin_Tools' => $baseDir . '/classes/class-admin-tools.php',
     'TxToIT\\OML\\Core' => $baseDir . '/classes/class-core.php',
     'TxToIT\\OML\\Custom_Admin_Settings' => $baseDir . '/classes/class-custom-settings-api.php',
-    'TxToIT\\OML\\Functions' => $baseDir . '/classes/class-functions.php',
+    'TxToIT\\OML\\Import' => $baseDir . '/classes/class-import.php',
     'TxToIT\\OML\\Ofertasmall_Stores_API' => $baseDir . '/classes/class-ofertasmall-stores-api.php',
     'TxToIT\\OML\\Store_CPT' => $baseDir . '/classes/class-store-cpt.php',
     'TxToIT\\OML\\Store_Tax' => $baseDir . '/classes/class-store-tax.php',

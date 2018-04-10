@@ -11,7 +11,7 @@ License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-__('Gets stores from ofertasmall API','ofertasmall-lojas');
+__( 'Gets stores from ofertasmall API', 'ofertasmall-lojas' );
 
 // Autoload
 require_once( "vendor/autoload.php" );
@@ -31,3 +31,29 @@ $plugin->set_args( array(
 	),
 ) );
 $plugin->init();
+
+/*$meta_query_args = array(
+	array(
+		'key'     => 'alg_wc_civs_term_color_color',
+		'value'   => '#1e73be',
+		'compare' => '='
+	)
+);
+$meta_query = new \WP_Meta_Query( $meta_query_args );
+error_log(print_r($meta_query->get_sql('post'),true));*/
+
+/*
+add_action( 'init', function () {
+	global $wpdb;
+	$meta_key   = 'alg_wc_civs_term_color_color';
+	$meta_value = '#1e73be';
+	$result   = $wpdb->get_var( $wpdb->prepare(
+		"
+		SELECT term_id
+		FROM $wpdb->termmeta 
+		WHERE meta_key = %s AND meta_value = %s
+	",
+		$meta_key, $meta_value
+	) );
+} );
+*/

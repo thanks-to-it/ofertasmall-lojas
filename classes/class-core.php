@@ -31,8 +31,9 @@ if ( ! class_exists( 'TxToIT\OML\Core' ) ) {
 			add_action( 'init', array( 'TxToIT\OML\Store_CPT', 'register_cpt' ) );
 
 			// Register taxonomy
-			add_action( 'init', array( 'TxToIT\OML\Store_Tax', 'register_taxonomy' ) );
-
+			add_action( 'init', function () {
+				Store_Tax::register_taxonomy( Store_CPT::$post_type );
+			} );
 		}
 
 	}
