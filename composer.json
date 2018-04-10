@@ -1,0 +1,30 @@
+{
+  "name": "thanks-to-it/ofertasmall-lojas",
+  "keywords": [
+    "wordpress",
+    "plugin",
+    "ofertasmall",
+    "lojas"
+  ],
+  "require": {
+    "php": ">=5.3.2",
+    "composer/installers": ">=v1.2.0",
+    "tareq1988/wordpress-settings-api-class": "dev-master"
+  },
+  "config": {
+    "preferred-install": "dist",
+    "optimize-autoloader": true
+  },
+  "extra": {
+    "installer-paths": {
+      "vendor/{$vendor}/{$name}": [
+        "type:wordpress-plugin"
+      ]
+    }
+  },
+  "autoload": {
+    "classmap": [
+      "classes/"
+    ]
+  }
+}
