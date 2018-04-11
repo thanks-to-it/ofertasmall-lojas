@@ -34,6 +34,13 @@ if ( ! class_exists( 'TxToIT\OML\Core' ) ) {
 			add_action( 'init', function () {
 				Store_Tax::register_taxonomy( Store_CPT::$post_type );
 			} );
+
+			add_action( 'admin_init', function () {
+				$custom_fields = new Custom_Fields( array(
+					'stores_post_type' => Store_CPT::$post_type
+				) );
+				$custom_fields->create_custom_fields();
+			} );
 		}
 
 	}

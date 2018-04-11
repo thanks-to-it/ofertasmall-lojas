@@ -2,7 +2,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Newspaper Magazine\n"
-"POT-Creation-Date: 2018-04-09 21:36-0300\n"
+"POT-Creation-Date: 2018-04-10 20:59-0300\n"
 "PO-Revision-Date: 2017-01-17 13:05-0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -19,7 +19,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: tasks\n"
 "X-Poedit-SearchPathExcluded-2: vendor\n"
 
-#: classes/class-admin-settings.php:33 classes/class-admin-settings.php:82
+#: classes/class-admin-settings.php:33 classes/class-admin-settings.php:72
 msgid "WP Lojas"
 msgstr ""
 
@@ -27,12 +27,132 @@ msgstr ""
 msgid "General Settings"
 msgstr ""
 
-#: classes/class-admin-settings.php:67
+#: classes/class-admin-settings.php:57
 msgid "Token"
 msgstr ""
 
-#: classes/class-admin-settings.php:68
+#: classes/class-admin-settings.php:58
 msgid "Identifies the store"
+msgstr ""
+
+#: classes/class-admin-tools.php:22 classes/class-admin-tools.php:75
+#: classes/class-admin-tools.php:89
+msgid "Import Stores"
+msgstr ""
+
+#: classes/class-admin-tools.php:79
+msgid "Progress"
+msgstr ""
+
+#: classes/class-store-cpt.php:23
+msgctxt "post type general name"
+msgid "Stores"
+msgstr ""
+
+#: classes/class-store-cpt.php:24
+msgctxt "post type singular name"
+msgid "Store"
+msgstr ""
+
+#: classes/class-store-cpt.php:25
+msgctxt "admin menu"
+msgid "Stores"
+msgstr ""
+
+#: classes/class-store-cpt.php:26
+msgctxt "add new on admin bar"
+msgid "Store"
+msgstr ""
+
+#: classes/class-store-cpt.php:27
+msgctxt "Store"
+msgid "Add New"
+msgstr ""
+
+#: classes/class-store-cpt.php:28
+msgid "Add New Store"
+msgstr ""
+
+#: classes/class-store-cpt.php:29
+msgid "New Store"
+msgstr ""
+
+#: classes/class-store-cpt.php:30
+msgid "Edit Store"
+msgstr ""
+
+#: classes/class-store-cpt.php:31
+msgid "View Store"
+msgstr ""
+
+#: classes/class-store-cpt.php:32
+msgid "Stores"
+msgstr ""
+
+#: classes/class-store-cpt.php:33
+msgid "Search Stores"
+msgstr ""
+
+#: classes/class-store-cpt.php:34
+msgid "Parent Stores:"
+msgstr ""
+
+#: classes/class-store-cpt.php:35
+msgid "No Stores found."
+msgstr ""
+
+#: classes/class-store-cpt.php:36
+msgid "No Stores found in Trash."
+msgstr ""
+
+#: classes/class-store-cpt.php:41
+msgid "Description."
+msgstr ""
+
+#: classes/class-store-tax.php:24
+msgctxt "taxonomy general name"
+msgid "Categories"
+msgstr ""
+
+#: classes/class-store-tax.php:25
+msgctxt "taxonomy singular name"
+msgid "Category"
+msgstr ""
+
+#: classes/class-store-tax.php:26
+msgid "Search Categories"
+msgstr ""
+
+#: classes/class-store-tax.php:27
+msgid "Categories"
+msgstr ""
+
+#: classes/class-store-tax.php:28
+msgid "Parent Category"
+msgstr ""
+
+#: classes/class-store-tax.php:29
+msgid "Parent Category:"
+msgstr ""
+
+#: classes/class-store-tax.php:30
+msgid "Edit Category"
+msgstr ""
+
+#: classes/class-store-tax.php:31
+msgid "Update Category"
+msgstr ""
+
+#: classes/class-store-tax.php:32
+msgid "Add New Category"
+msgstr ""
+
+#: classes/class-store-tax.php:33
+msgid "New Category Name"
+msgstr ""
+
+#: classes/class-store-tax.php:34
+msgid "Category"
 msgstr ""
 
 #: ofertasmall-lojas.php:14
