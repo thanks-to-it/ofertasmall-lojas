@@ -29,7 +29,7 @@ if ( ! class_exists( 'TxToIT\OML\Ofertasmall_Stores_API' ) ) {
 			$args = wp_parse_args( $args, array(
 				'id'          => null,
 				'nome'        => '',
-				'ativo'       => 1,
+				'ativo'       => null,
 				'hasSegmento' => 0,
 				'pagina'      => null,
 				'quantidade'  => null,

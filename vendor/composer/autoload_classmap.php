@@ -101,9 +101,12 @@ return array(
     'TxToIT\\OML\\Custom_Admin_Settings' => $baseDir . '/classes/class-custom-settings-api.php',
     'TxToIT\\OML\\Custom_Fields' => $baseDir . '/classes/class-custom-fields.php',
     'TxToIT\\OML\\Import' => $baseDir . '/classes/class-import.php',
+    'TxToIT\\OML\\Import_Background_Process' => $baseDir . '/classes/class-import-background-process.php',
     'TxToIT\\OML\\Ofertasmall_Stores_API' => $baseDir . '/classes/class-ofertasmall-stores-api.php',
     'TxToIT\\OML\\Store_CPT' => $baseDir . '/classes/class-store-cpt.php',
     'TxToIT\\OML\\Store_Tax' => $baseDir . '/classes/class-store-tax.php',
     'TxToIT\\OML\\WP_Plugin' => $baseDir . '/classes/class-wp-plugin.php',
+    'WP_Async_Request' => $vendorDir . '/a5hleyrich/wp-background-processing/classes/wp-async-request.php',
+    'WP_Background_Process' => $vendorDir . '/a5hleyrich/wp-background-processing/classes/wp-background-process.php',
     'WeDevs_Settings_API' => $vendorDir . '/tareq1988/wordpress-settings-api-class/src/class.settings-api.php',
 );

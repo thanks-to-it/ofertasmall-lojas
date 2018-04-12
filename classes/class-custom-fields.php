@@ -19,7 +19,7 @@ if ( ! class_exists( 'TxToIT\OML\Custom_Fields' ) ) {
 
 		public function __construct( $fields_args ) {
 			$fields_args       = wp_parse_args( $fields_args, array(
-				'custom_fields_prefix' => '_oml_',
+				'db_key_prefix' => '_oml_',
 				'stores_post_type'     => ''
 			) );
 			$this->fields_args = $fields_args;
@@ -27,7 +27,7 @@ if ( ! class_exists( 'TxToIT\OML\Custom_Fields' ) ) {
 
 		public function create_custom_fields() {
 			if ( function_exists( 'acf_add_local_field_group' ) ):
-				$prefix = $this->fields_args['custom_fields_prefix'];
+				$prefix = $this->fields_args['db_key_prefix'];
 
 				acf_add_local_field_group( array(
 					'key'      => 'oml_cmb',

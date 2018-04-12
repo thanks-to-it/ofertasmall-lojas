@@ -57,3 +57,12 @@ add_action( 'init', function () {
 	) );
 } );
 */
+
+/*add_action('admin_init',function(){
+	$stores = get_option( '_oml_stores_from_api' );
+	$store  = wp_list_filter( $stores, array(
+		'id' => 991
+	) );
+	error_log( print_r( $store, true ) );
+});
+*/

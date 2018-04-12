@@ -116,10 +116,13 @@ class ComposerStaticInitd1bd3c1f2463e3f0ea08ade016ef5ede
         'TxToIT\\OML\\Custom_Admin_Settings' => __DIR__ . '/../..' . '/classes/class-custom-settings-api.php',
         'TxToIT\\OML\\Custom_Fields' => __DIR__ . '/../..' . '/classes/class-custom-fields.php',
         'TxToIT\\OML\\Import' => __DIR__ . '/../..' . '/classes/class-import.php',
+        'TxToIT\\OML\\Import_Background_Process' => __DIR__ . '/../..' . '/classes/class-import-background-process.php',
         'TxToIT\\OML\\Ofertasmall_Stores_API' => __DIR__ . '/../..' . '/classes/class-ofertasmall-stores-api.php',
         'TxToIT\\OML\\Store_CPT' => __DIR__ . '/../..' . '/classes/class-store-cpt.php',
         'TxToIT\\OML\\Store_Tax' => __DIR__ . '/../..' . '/classes/class-store-tax.php',
         'TxToIT\\OML\\WP_Plugin' => __DIR__ . '/../..' . '/classes/class-wp-plugin.php',
+        'WP_Async_Request' => __DIR__ . '/..' . '/a5hleyrich/wp-background-processing/classes/wp-async-request.php',
+        'WP_Background_Process' => __DIR__ . '/..' . '/a5hleyrich/wp-background-processing/classes/wp-background-process.php',
         'WeDevs_Settings_API' => __DIR__ . '/..' . '/tareq1988/wordpress-settings-api-class/src/class.settings-api.php',
     );
 

@@ -20,16 +20,27 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 
 		public function __construct( $import_args = array() ) {
 			$import_args       = wp_parse_args( $import_args, array(
-				'custom_fields_prefix' => '_oml_',
-				'stores_post_type'     => '',
-				'stores_tax'           => ''
+				'db_key_prefix'    => '_oml_',
+				'stores_post_type' => '',
+				'stores_tax'       => ''
 			) );
 			$this->import_args = $import_args;
 		}
 
-		public function import_stores_from_array( $stores_array ) {
-			foreach ( $stores_array as $store ) {
-				self::import_store( $store );
+		public function import_stores_from_array( $stores_array, $background_processing = true ) {
+			if ( ! $background_processing ) {
+				foreach ( $stores_array as $store ) {
+					self::import_store( $store );
+				}
+			} else {
+				update_option( '_oml_import_count', 0, false );
+				$plugin      = Core::get_instance();
+				$bkg_process = $plugin->import_bkg_process;
+				$bkg_process->cancel_process();
+				foreach ( $stores_array as $store ) {
+					$bkg_process->push_to_queue( $store['id'] );
+				}
+				$bkg_process->save()->dispatch();
 			}
 		}
 
@@ -52,6 +63,8 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 		}
 
 		public function import_store( $store ) {
+			//error_log(print_r($store,true));
+
 			// Remove unwanted custom fields
 			$metas_to_save = array_filter( $store, array( $this, 'filter_unwanted_custom_fields' ), ARRAY_FILTER_USE_KEY );
 
@@ -61,7 +74,7 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 			// Add prefix
 			$metas_to_save_with_prefix = array_combine(
 				array_map( function ( $k ) {
-					return $this->import_args['custom_fields_prefix'] . $k;
+					return $this->import_args['db_key_prefix'] . $k;
 				}, array_keys( $metas_to_save ) ),
 				$metas_to_save
 			);
@@ -71,7 +84,7 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 				'post_type'  => $this->import_args['stores_post_type'],
 				'meta_query' => array(
 					array(
-						'key'     => $this->import_args['custom_fields_prefix'] . 'id',
+						'key'     => $this->import_args['db_key_prefix'] . 'id',
 						'value'   => $store['id'],
 						'compare' => 'IN',
 					),
@@ -97,26 +110,15 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 		}
 
 		protected function download_logo_to_post_thumbnail( $store, $store_wp_id ) {
-			//error_log(print_r($this->checkRemoteFile( $store['logo'] ),true));
-
 			if (
 				! isset( $store['logo'] ) ||
 				empty( $store['logo'] )
-				//! $this->checkRemoteFile( $store['logo'] )
 			) {
 				return;
 			}
 
-			//$store['logo'] = 'http://wordpress.org/about/images/logos/wordpress-logo-stacked-rgb.png';
-
-
-
-			//error_log($store['logo']);
-			$result = media_sideload_image( $store['logo'], $store_wp_id, null, 'id' );
-			//$result = $this->media_sideload_image( $store['logo'], $store_wp_id, null, 'id' );
-
-			//$result = $this->upload_image_from_url($store['logo']);
-			//error_log(print_r($result,true));
+			//$result = media_sideload_image( $store['logo'], $store_wp_id, null, 'id' );
+			$result = $this->media_sideload_image( $store['logo'], $store_wp_id, null, 'id' );
 
 			if ( ! is_wp_error( $result ) ) {
 				if ( has_post_thumbnail( $store_wp_id ) ) {
@@ -129,63 +131,6 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 			}
 		}
 
-		/*function upload_image_from_url( $imageurl )
-		{
-			require_once( ABSPATH . 'wp-admin/includes/image.php' );
-			require_once( ABSPATH . 'wp-admin/includes/file.php' );
-			require_once( ABSPATH . 'wp-admin/includes/media.php' );
-
-			// Get the file extension for the image
-			$fileextension = image_type_to_extension( exif_imagetype( $imageurl ) );
-
-			//error_log(print_r($fileextension,true));
-
-			// Save as a temporary file
-			$tmp = download_url( $imageurl );
-
-			// Check for download errors
-			if ( is_wp_error( $tmp ) )
-			{
-				@unlink( $file_array[ 'tmp_name' ] );
-				return $tmp;
-			}
-
-			// Image base name:
-			$name = basename( $imageurl );
-
-			// Take care of image files without extension:
-			$path = pathinfo( $tmp );
-			if( ! isset( $path['extension'] ) ):
-				$tmpnew = $tmp . '.tmp';
-				if( ! rename( $tmp, $tmpnew ) ):
-					return '';
-				else:
-					$ext  = pathinfo( $imageurl, PATHINFO_EXTENSION );
-					$name = pathinfo( $imageurl, PATHINFO_FILENAME )  . $fileextension;
-					$tmp = $tmpnew;
-				endif;
-			endif;
-
-			// Upload the image into the WordPress Media Library:
-			$file_array = array(
-				'name'     => $name,
-				'tmp_name' => $tmp
-			);
-			$id = media_handle_sideload( $file_array, 0 );
-
-			// Check for handle sideload errors:
-			if ( is_wp_error( $id ) )
-			{
-				@unlink( $file_array['tmp_name'] );
-				return $id;
-			}
-
-			// Get the attachment url:
-			$attachment_url = wp_get_attachment_url( $id );
-
-			return $attachment_url;
-		}*/
-
 		/**
 		 * Downloads an image from the specified URL and attaches it to a post.
 		 *
@@ -193,35 +138,37 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 		 * @since 4.2.0 Introduced the `$return` parameter.
 		 * @since 4.8.0 Introduced the 'id' option within the `$return` parameter.
 		 *
-		 * @param string $file    The URL of the image to download.
-		 * @param int    $post_id The post ID the media is to be associated with.
-		 * @param string $desc    Optional. Description of the image.
-		 * @param string $return  Optional. Accepts 'html' (image tag html) or 'src' (URL), or 'id' (attachment ID). Default 'html'.
+		 * @param string $file The URL of the image to download.
+		 * @param int $post_id The post ID the media is to be associated with.
+		 * @param string $desc Optional. Description of the image.
+		 * @param string $return Optional. Accepts 'html' (image tag html) or 'src' (URL), or 'id' (attachment ID). Default 'html'.
+		 *
 		 * @return string|WP_Error Populated HTML img tag on success, WP_Error object otherwise.
 		 */
-		/*function media_sideload_image( $file, $post_id, $desc = null, $return = 'html' ) {
+		function media_sideload_image( $file, $post_id, $desc = null, $return = 'html' ) {
 			if ( ! empty( $file ) ) {
 
 				// Set variables for storage, fix file filename for query strings.
 				preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $file, $matches );
 				if ( ! $matches ) {
-
-					$fileextension = image_type_to_extension( exif_imagetype( $file ) );
-					$matches = array($fileextension);
-					//error_log(print_r($matches,true));
-
-					//error_log(print_r($content_type,true));
-					//return new WP_Error( 'image_sideload_failed', __( 'Invalid image URL' ) );
+					$image_type = exif_imagetype( $file );
+					if ( $image_type ) {
+						$fileextension = image_type_to_extension( $image_type );
+						$matches       = array( $fileextension );
+					} else {
+						return new WP_Error( 'image_sideload_failed', __( 'Invalid image URL' ) );
+					}
 				}
 
-				$file_array = array();
+				require_once( ABSPATH . 'wp-admin/includes/media.php' );
+				require_once( ABSPATH . 'wp-admin/includes/file.php' );
+				require_once( ABSPATH . 'wp-admin/includes/image.php' );
+
+				$file_array         = array();
 				$file_array['name'] = basename( $matches[0] );
 
 				// Download file to temp location.
 				$file_array['tmp_name'] = download_url( $file );
-
-				error_log('---');
-				error_log(print_r($file_array,true));
 
 				// If error storing temporarily, return the error.
 				if ( is_wp_error( $file_array['tmp_name'] ) ) {
@@ -234,6 +181,7 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 				// If error storing permanently, unlink.
 				if ( is_wp_error( $id ) ) {
 					@unlink( $file_array['tmp_name'] );
+
 					return $id;
 					// If attachment id was requested, return it early.
 				} elseif ( $return === 'id' ) {
@@ -249,30 +197,14 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 					return $src;
 				}
 
-				$alt = isset( $desc ) ? esc_attr( $desc ) : '';
+				$alt  = isset( $desc ) ? esc_attr( $desc ) : '';
 				$html = "<img src='$src' alt='$alt' />";
+
 				return $html;
 			} else {
 				return new WP_Error( 'image_sideload_failed' );
 			}
-		}*/
-
-		/*protected function checkRemoteFile( $url ) {
-			$ch = curl_init();
-			curl_setopt( $ch, CURLOPT_URL, $url );
-			// don't download content
-			curl_setopt( $ch, CURLOPT_NOBODY, 1 );
-			curl_setopt( $ch, CURLOPT_FAILONERROR, 1 );
-			curl_setopt( $ch, CURLOPT_RETURNTRANSFER, 1 );
-
-			$result = curl_exec( $ch );
-			curl_close( $ch );
-			if ( $result !== false ) {
-				return true;
-			} else {
-				return false;
-			}
-		}*/
+		}
 
 		protected function import_store_terms( $store, $store_wp_id ) {
 			if (
@@ -283,7 +215,7 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 				return;
 			}
 			$store_tax            = $this->import_args['stores_tax'];
-			$custom_fields_prefix = $this->import_args['custom_fields_prefix'];
+			$custom_fields_prefix = $this->import_args['db_key_prefix'];
 
 			$segmentos = $store['segmentos'][0];
 
@@ -338,17 +270,38 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 			);
 		}
 
-		public function import_stores() {
-			$token     = Admin_Settings::get_general_option( 'token' );
-			$lojas_api = new Ofertasmall_Stores_API( array(
-				'token' => $token,
-			) );
-			$lojas     = $lojas_api->get_lojas( array(
+		public function save_stores_on_database( $stores ) {
+			$prefix = $this->import_args['db_key_prefix'];
+			update_option( $prefix . 'stores_from_api', $stores, false );
+		}
+
+		public function get_bkg_process_percentage() {
+			$stores = get_option( '_oml_stores_from_api' );
+			$total  = count( $stores );
+			$count  = get_option( '_oml_import_count', 0 );
+			$percentage = round( $count / $total,2 );
+			return $percentage;
+		}
+
+		public function import_stores_from_stores_api( Ofertasmall_Stores_API $api ) {
+
+			$stores = $api->get_lojas( array(
 				'hasSegmento' => 1,
-				'id'          => 1111
 			) );
-			self::import_stores_from_array( $lojas );
-			//error_log( print_r( $lojas, true ) );
+			$this->save_stores_on_database( $stores );
+			$this->import_stores_from_array( $stores );
+
+			//error_log(count($stores));
+
+			/*$test_ids = array( 1111, 1260, 990, 1339, 1009, 1340, 1342, 1142);
+			foreach ( $test_ids as $id ) {
+				$stores = $api->get_lojas( array(
+					'hasSegmento' => 1,
+					'id'          => $id
+				) );
+				$this->import_stores_from_array( $stores );
+			}*/
+
 		}
 
 	}

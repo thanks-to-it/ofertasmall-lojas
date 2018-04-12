@@ -30,15 +30,26 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Tools' ) ) {
 				return;
 			}
 
+			$token      = Admin_Settings::get_general_option( 'token' );
+			$stores_api = new Ofertasmall_Stores_API( array(
+				'token' => $token,
+			) );
+
 			$import = new Import( array(
 				'stores_post_type' => Store_CPT::$post_type,
 				'stores_tax'       => Store_Tax::$taxonomy
 			) );
-			$import->import_stores();
-			//Import::import_stores();
+			$import->import_stores_from_stores_api( $stores_api );
 		}
 
 		public static function plugin_page() {
+			$import = new Import( array(
+				'stores_post_type' => Store_CPT::$post_type,
+				'stores_tax'       => Store_Tax::$taxonomy
+			) );
+			$percentage = $import->get_bkg_process_percentage();
+			$percentage_pretty = 100*$percentage;
+
 			echo '
 			<style>
 				.oml-progress-wrapper{
@@ -53,7 +64,7 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Tools' ) ) {
 					left:0;
 					top:0;
 					background:#cecece;
-					width:0%;
+					width:'.$percentage_pretty.'%;
 					height:100%;
 				}
 				.oml-progress-value{
@@ -79,7 +90,7 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Tools' ) ) {
 				<th scope="row"><label for="blogname">' . __( 'Progress', 'ofertasmall-lojas' ) . '</label></th>
 				<td>
 					<div class="oml-progress-wrapper">
-						<span class="oml-progress-value">0%</span>
+						<span class="oml-progress-value">'.$percentage_pretty.'%</span>
 						<span class="oml-progress-bar"></span>
 					</div>
 				</td>
