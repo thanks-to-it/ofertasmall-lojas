@@ -1,6 +1,7 @@
 <?php
 /*
 Plugin Name: WP Lojas
+Plugin URI: https://github.com/thanks-to-it/ofertasmall-lojas
 Description: Gets stores from ofertasmall API
 Version: 1.0.0
 Author: Thanks to IT

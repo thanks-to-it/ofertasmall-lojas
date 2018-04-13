@@ -45,7 +45,7 @@ if ( ! class_exists( 'TxToIT\OML\Store_CPT' ) ) {
 				'menu_icon'          => 'dashicons-admin-multisite',
 				'show_in_menu'       => true,
 				'query_var'          => true,
-				'rewrite'            => array( 'slug' => 'Loja' ),
+				'rewrite'            => array( 'slug' => 'lojas' ),
 				'capability_type'    => 'post',
 				'has_archive'        => true,
 				'hierarchical'       => false,

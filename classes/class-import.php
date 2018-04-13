@@ -273,7 +273,8 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 			return array(
 				'post_type'     => $this->import_args['stores_post_type'],
 				'post_title'    => $store['nome'],
-				'post_name'     => $store['slug'],
+				'post_name'     => sanitize_title( $store['nome'] ),
+				//'post_name'     => $store['slug'],
 				'post_date'     => $store['criado'],
 				'post_modified' => $store['atualizado'],
 				'post_status'   => $store['ativo'] == 1 ? 'publish' : 'draft',
@@ -336,7 +337,6 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 		}
 
 		public function import_stores_from_stores_api( Ofertasmall_Stores_API $api ) {
-
 			$stores = $api->get_lojas( array(
 				'hasSegmento' => 1,
 			) );
@@ -346,25 +346,12 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 			) {
 				$this->api_result = $stores;
 				add_action( 'admin_notices', array( $this, 'show_error_message_from_api' ) );
-
 				return;
 			}
 
 			add_action( 'admin_notices', array( $this, 'show_ok_notice' ) );
 			$this->save_stores_on_database( $stores );
 			$this->import_stores_from_array( $stores );
-
-			//error_log(count($stores));
-
-			/*$test_ids = array( 1111, 1260, 990, 1339, 1009, 1340, 1342, 1142);
-			foreach ( $test_ids as $id ) {
-				$stores = $api->get_lojas( array(
-					'hasSegmento' => 1,
-					'id'          => $id
-				) );
-				$this->import_stores_from_array( $stores );
-			}*/
-
 		}
 
 	}
