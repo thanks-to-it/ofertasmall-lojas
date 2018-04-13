@@ -17,6 +17,7 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 	class Import {
 
 		public $import_args = array();
+		private $api_result;
 
 		public function __construct( $import_args = array() ) {
 			$import_args       = wp_parse_args( $import_args, array(
@@ -117,7 +118,9 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 		}
 
 		protected function download_logo_to_post_thumbnail( $store, $store_wp_id ) {
+			$download = filter_var( Admin_Settings::get_general_option( 'download_images', 'oml_general', 'on' ), FILTER_VALIDATE_BOOLEAN );
 			if (
+				! $download ||
 				! isset( $store['logo'] ) ||
 				empty( $store['logo'] )
 			) {
@@ -133,6 +136,7 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 					wp_delete_attachment( $old_image_id, true );
 				}
 				set_post_thumbnail( $store_wp_id, $result );
+				update_post_meta( $store_wp_id, $this->import_args['db_key_prefix'] . 'logo_wp_id', $result );
 			} else {
 				error_log( print_r( $result, true ) );
 			}
@@ -316,11 +320,37 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 			return $percentage;
 		}
 
+		public function show_error_message_from_api() {
+			$class   = 'notice notice-error';
+			$message = __( 'Sorry, some error ocurred.', 'ofertasmall-lojas' );
+			$message .= '<br /><strong>' . __( 'API Message:', 'ofertasmall-lojas' ) . '</strong>';
+			$message .= ' '. $this->api_result['message'];
+			printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );
+		}
+
+		public function show_ok_notice() {
+			$class   = 'notice notice-success';
+			$message = __( 'The API is working. The import process has started.', 'ofertasmall-lojas' );
+			$message .= '<br />' . __( 'You can navigate normally while the process continues', 'ofertasmall-lojas' );
+			printf( '<div class="%1$s"><p>%2$s</p></div>', esc_attr( $class ), $message );
+		}
+
 		public function import_stores_from_stores_api( Ofertasmall_Stores_API $api ) {
 
 			$stores = $api->get_lojas( array(
 				'hasSegmento' => 1,
 			) );
+			if (
+				! is_array( $stores ) ||
+				( isset( $stores['success'] ) && ! filter_var( $stores['success'], FILTER_VALIDATE_BOOLEAN ) )
+			) {
+				$this->api_result = $stores;
+				add_action( 'admin_notices', array( $this, 'show_error_message_from_api' ) );
+
+				return;
+			}
+
+			add_action( 'admin_notices', array( $this, 'show_ok_notice' ) );
 			$this->save_stores_on_database( $stores );
 			$this->import_stores_from_array( $stores );
 

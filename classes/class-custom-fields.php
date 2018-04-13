@@ -98,7 +98,7 @@ if ( ! class_exists( 'TxToIT\OML\Custom_Fields' ) ) {
 							'label' => __( 'Logo', 'ofertasmall-lojas' ),
 							'name'  => $prefix . 'logo',
 							'type'  => 'text',
-						)
+						),
 					),
 					'location' => array(
 						array(

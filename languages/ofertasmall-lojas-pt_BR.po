@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Newspaper Magazine\n"
-"POT-Creation-Date: 2018-04-10 22:14-0300\n"
-"PO-Revision-Date: 2018-04-10 22:15-0300\n"
+"POT-Creation-Date: 2018-04-13 15:50-0300\n"
+"PO-Revision-Date: 2018-04-13 15:50-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -21,7 +21,7 @@ msgstr ""
 "X-Poedit-SearchPathExcluded-1: tasks\n"
 "X-Poedit-SearchPathExcluded-2: vendor\n"
 
-#: classes/class-admin-settings.php:33 classes/class-admin-settings.php:72
+#: classes/class-admin-settings.php:33 classes/class-admin-settings.php:79
 #: classes/class-custom-fields.php:34
 msgid "WP Lojas"
 msgstr ""
@@ -38,12 +38,20 @@ msgstr ""
 msgid "Identifies the store"
 msgstr "Identifica a loja"
 
-#: classes/class-admin-tools.php:22 classes/class-admin-tools.php:75
-#: classes/class-admin-tools.php:89
+#: classes/class-admin-settings.php:64
+msgid "Download Images"
+msgstr "Carregar imagens"
+
+#: classes/class-admin-settings.php:65
+msgid "Downloads images on import"
+msgstr "Carrega imagens durante a importação"
+
+#: classes/class-admin-tools.php:22 classes/class-admin-tools.php:146
+#: classes/class-admin-tools.php:160
 msgid "Import Stores"
 msgstr "Importar Lojas"
 
-#: classes/class-admin-tools.php:79
+#: classes/class-admin-tools.php:150
 msgid "Progress"
 msgstr "Progresso"
 
@@ -86,6 +94,30 @@ msgstr "Piso"
 #: classes/class-custom-fields.php:98
 msgid "Logo"
 msgstr ""
+
+#: classes/class-custom-fields.php:104
+msgid "Logo2"
+msgstr ""
+
+#: classes/class-import.php:170
+msgid "Invalid image URL"
+msgstr "URL da imagem inválida"
+
+#: classes/class-import.php:325
+msgid "Sorry, some error ocurred."
+msgstr "Desculpe, algum erro ocorreu."
+
+#: classes/class-import.php:326
+msgid "API Message:"
+msgstr "Mensagem da API:"
+
+#: classes/class-import.php:333
+msgid "The API is working. The import process has started."
+msgstr "A Api está funcionando. O processo de importação começou."
+
+#: classes/class-import.php:334
+msgid "You can navigate normally while the process continues"
+msgstr "Você pode navegar normalmente enquanto o processo continua"
 
 #: classes/class-store-cpt.php:23
 msgctxt "post type general name"
@@ -205,3 +237,7 @@ msgstr "Insere lojas vindas da API do Ofertasmall"
 #: ofertasmall-lojas.php:26
 msgid "Settings"
 msgstr "Ajustes"
+
+#: ofertasmall-lojas.php:30
+msgid "Import"
+msgstr "Importar"

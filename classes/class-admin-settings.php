@@ -56,8 +56,15 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Settings' ) ) {
 						'name'    => 'token',
 						'label'   => __( 'Token', 'ofertasmall-lojas' ),
 						'desc'    => __( 'Identifies the store', 'ofertasmall-lojas' ),
-						'type'    => 'password',
+						'type'    => 'text',
 						'default' => ''
+					),
+					array(
+						'name'    => 'download_images',
+						'label'   => __( 'Download Images', 'ofertasmall-lojas' ),
+						'desc'    => __( 'Downloads images on import', 'ofertasmall-lojas' ),
+						'type'    => 'checkbox',
+						'default' => 'on'
 					),
 				),
 

@@ -33,12 +33,12 @@ if ( ! class_exists( 'TxToIT\OML\Core' ) ) {
 			add_action( 'admin_menu', array( 'TxToIT\OML\Admin_Tools', 'admin_menu' ) );
 
 			// Register Custom post type
-			add_action( 'init', array( 'TxToIT\OML\Store_CPT', 'register_cpt' ) );
+			add_action( 'init', array( 'TxToIT\OML\Store_CPT', 'register_cpt' ),99 );
 
 			// Register taxonomy
 			add_action( 'init', function () {
 				Store_Tax::register_taxonomy( Store_CPT::$post_type );
-			} );
+			},99 );
 
 			// Initialize background process
 			add_action( 'init', function () {
@@ -46,12 +46,12 @@ if ( ! class_exists( 'TxToIT\OML\Core' ) ) {
 			} );
 
 			// Handle custom fields
-			add_action( 'admin_init', function () {
+			/*add_action( 'admin_init', function () {
 				$custom_fields = new Custom_Fields( array(
 					'stores_post_type' => Store_CPT::$post_type
 				) );
 				$custom_fields->create_custom_fields();
-			} );
+			} );*/
 
 			// Reject unsafe urls
 			add_filter( 'http_request_args', array( $this, 'turn_off_reject_unsafe_urls' ),10,2 );

@@ -31,6 +31,22 @@ if ( ! class_exists( 'TxToIT\OML\Custom_Admin_Settings' ) ) {
 		}
 
 		/**
+		 * Displays a password field for a settings field
+		 *
+		 * @param array   $args settings field args
+		 */
+		/*function callback_password( $args ) {
+
+			$value = esc_attr( $this->get_option( $args['id'], $args['section'], $args['std'] ) );
+			$size  = isset( $args['size'] ) && !is_null( $args['size'] ) ? $args['size'] : 'regular';
+
+			$html  = sprintf( '<input autocomplete="off" type="password" class="%1$s-text" id="%2$s[%3$s]" name="%2$s[%3$s]" value="%4$s"/>', $size, $args['section'], $args['id'], $value );
+			$html  .= $this->get_field_description( $args );
+			$id = $args['id'];
+			echo $html;
+		}*/
+
+		/**
 		 * Displays a title field
 		 *
 		 * @version 1.0.0
