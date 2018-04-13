@@ -25,6 +25,10 @@ $plugin->set_args( array(
 			'url'  => admin_url( 'options-general.php?page=ofertasmall-lojas' ),
 			'text' => __( 'Settings', ' ofertasmall-lojas' ),
 		),
+		array(
+			'url'  => admin_url( 'tools.php?page=ofertasmall-lojas-import' ),
+			'text' => __( 'Import', ' ofertasmall-lojas' ),
+		),
 	),
 	'translation'      => array(
 		'text_domain' => ' ofertasmall-lojas',
