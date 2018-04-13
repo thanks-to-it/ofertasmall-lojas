@@ -33,7 +33,9 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 					self::import_store( $store );
 				}
 			} else {
-				update_option( '_oml_import_count', 0, false );
+				//update_option( '_oml_import_count', 0, false );
+				update_option( '_oml_imported_store_ids', array(), false );
+				update_option( '_oml_import_error_store_ids', array(), false );
 				$plugin      = Core::get_instance();
 				$bkg_process = $plugin->import_bkg_process;
 				$bkg_process->cancel_process();
@@ -80,13 +82,18 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 			);
 
 			$the_query = new \WP_Query( array(
-				'fields'     => 'ids',
-				'post_type'  => $this->import_args['stores_post_type'],
-				'meta_query' => array(
+				'post_status'            => 'any',
+				'cache_results'          => false,
+				'no_found_rows'          => false,
+				'update_post_term_cache' => false,
+				'update_post_meta_cache' => false,
+				'fields'                 => 'ids',
+				'post_type'              => $this->import_args['stores_post_type'],
+				'meta_query'             => array(
 					array(
 						'key'     => $this->import_args['db_key_prefix'] . 'id',
 						'value'   => $store['id'],
-						'compare' => 'IN',
+						'compare' => '=',
 					),
 				),
 			) );
@@ -275,11 +282,37 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 			update_option( $prefix . 'stores_from_api', $stores, false );
 		}
 
-		public function get_bkg_process_percentage() {
+		public function update_bkg_process_task( $store_id ) {
 			$stores = get_option( '_oml_stores_from_api' );
-			$total  = count( $stores );
-			$count  = get_option( '_oml_import_count', 0 );
-			$percentage = round( $count / $total,2 );
+			$store  = wp_list_filter( $stores, array(
+				'id' => $store_id
+			) );
+
+			$imported_store_ids = get_option( '_oml_imported_store_ids', 0 );
+			if ( ! array_search( $store_id, $imported_store_ids ) ) {
+				array_push( $imported_store_ids, $store_id );
+				update_option( '_oml_imported_store_ids', $imported_store_ids, false );
+			} else {
+				$error_stores = get_option( '_oml_import_error_store_ids', array() );
+				array_push( $error_stores, $store_id );
+				update_option( '_oml_import_error_store_ids', $error_stores, false );
+
+				return false;
+			}
+
+			reset( $store );
+			$first_key = key( $store );
+			$this->import_store( $store[ $first_key ] );
+
+			return false;
+		}
+
+		public function get_bkg_process_percentage() {
+			$stores     = get_option( '_oml_stores_from_api' );
+			$total      = count( $stores );
+			$count      = count( get_option( '_oml_imported_store_ids', array() ) );
+			$percentage = round( $count / $total, 2 );
+
 			return $percentage;
 		}
 
