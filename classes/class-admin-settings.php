@@ -54,8 +54,8 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Settings' ) ) {
 				'oml_general' => array(
 					array(
 						'name'    => 'token',
-						'label'   => __( 'Token', 'ofertasmall-lojas' ),
-						'desc'    => __( 'Identifies the store', 'ofertasmall-lojas' ),
+						'label'   => __( 'Shopping Token', 'ofertasmall-lojas' ),
+						'desc'    => __( 'Identifies the Shopping', 'ofertasmall-lojas' ),
 						'type'    => 'text',
 						'default' => ''
 					),

@@ -136,6 +136,11 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 					wp_delete_attachment( $old_image_id, true );
 				}
 				set_post_thumbnail( $store_wp_id, $result );
+
+				$old_logo_wp_id = get_post_meta( $store_wp_id, $this->import_args['db_key_prefix'] . 'logo_wp_id', true );
+				if ( ! empty( $old_logo_wp_id ) ) {
+					wp_delete_attachment( $old_logo_wp_id, true );
+				}
 				update_post_meta( $store_wp_id, $this->import_args['db_key_prefix'] . 'logo_wp_id', $result );
 			} else {
 				error_log( print_r( $result, true ) );
@@ -254,17 +259,25 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 					$term_args['parent'] = $parent_wp_term_id;
 				}
 
+				$final_term_id = $result;
 				if ( empty( $result ) ) {
 					$term = wp_insert_term( $segmento_nome, $store_tax, $term_args );
 					if ( ! is_wp_error( $term ) ) {
 						$parent_wp_term_id = $term['term_id'];
+						$final_term_id = $parent_wp_term_id;
 						update_term_meta( $parent_wp_term_id, $segmento_meta_key, $term_segmento_id );
 					}
-					wp_set_post_terms( $store_wp_id, $parent_wp_term_id, $store_tax );
 				} else {
 					$term_args['name'] = $segmento_nome;
 					wp_update_term( $result, $store_tax, $term_args );
-					wp_set_post_terms( $store_wp_id, $result, $store_tax );
+				}
+
+				$existing_terms = wp_get_post_terms( $store_wp_id, $store_tax, array( 'fields' => 'ids' ) );
+				if ( ! empty( $existing_terms ) && ! is_wp_error( $existing_terms ) ) {
+					$existing_terms[] = $final_term_id;
+					wp_set_post_terms( $store_wp_id, $existing_terms, $store_tax );
+				} else {
+					wp_set_post_terms( $store_wp_id, $final_term_id, $store_tax );
 				}
 			}
 		}

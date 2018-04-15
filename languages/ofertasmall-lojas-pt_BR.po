@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Newspaper Magazine\n"
-"POT-Creation-Date: 2018-04-13 15:50-0300\n"
-"PO-Revision-Date: 2018-04-13 15:50-0300\n"
+"POT-Creation-Date: 2018-04-13 21:48-0300\n"
+"PO-Revision-Date: 2018-04-13 21:51-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -31,20 +31,20 @@ msgid "General Settings"
 msgstr "Ajustes gerais"
 
 #: classes/class-admin-settings.php:57
-msgid "Token"
-msgstr ""
+msgid "Shopping Token"
+msgstr "Token de Shopping"
 
 #: classes/class-admin-settings.php:58
-msgid "Identifies the store"
-msgstr "Identifica a loja"
+msgid "Identifies the Shopping"
+msgstr "Identifica o Shopping"
 
 #: classes/class-admin-settings.php:64
 msgid "Download Images"
-msgstr "Carregar imagens"
+msgstr "Download das imagens"
 
 #: classes/class-admin-settings.php:65
 msgid "Downloads images on import"
-msgstr "Carrega imagens durante a importação"
+msgstr "Faz Download das imagens durante a importação"
 
 #: classes/class-admin-tools.php:22 classes/class-admin-tools.php:146
 #: classes/class-admin-tools.php:160
@@ -95,27 +95,23 @@ msgstr "Piso"
 msgid "Logo"
 msgstr ""
 
-#: classes/class-custom-fields.php:104
-msgid "Logo2"
-msgstr ""
-
 #: classes/class-import.php:170
 msgid "Invalid image URL"
 msgstr "URL da imagem inválida"
 
-#: classes/class-import.php:325
+#: classes/class-import.php:326
 msgid "Sorry, some error ocurred."
 msgstr "Desculpe, algum erro ocorreu."
 
-#: classes/class-import.php:326
+#: classes/class-import.php:327
 msgid "API Message:"
 msgstr "Mensagem da API:"
 
-#: classes/class-import.php:333
+#: classes/class-import.php:334
 msgid "The API is working. The import process has started."
 msgstr "A Api está funcionando. O processo de importação começou."
 
-#: classes/class-import.php:334
+#: classes/class-import.php:335
 msgid "You can navigate normally while the process continues"
 msgstr "Você pode navegar normalmente enquanto o processo continua"
 
@@ -230,14 +226,14 @@ msgstr "Nova Categoria"
 msgid "Category"
 msgstr "Categoria"
 
-#: ofertasmall-lojas.php:14
+#: ofertasmall-lojas.php:15
 msgid "Gets stores from ofertasmall API"
 msgstr "Insere lojas vindas da API do Ofertasmall"
 
-#: ofertasmall-lojas.php:26
+#: ofertasmall-lojas.php:27
 msgid "Settings"
 msgstr "Ajustes"
 
-#: ofertasmall-lojas.php:30
+#: ofertasmall-lojas.php:31
 msgid "Import"
 msgstr "Importar"
