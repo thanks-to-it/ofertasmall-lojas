@@ -42,14 +42,7 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Tools' ) ) {
 			$import->import_stores_from_stores_api( $stores_api );
 		}
 
-		public static function echo_style() {
-			$import            = new Import( array(
-				'stores_post_type' => Store_CPT::$post_type,
-				'stores_tax'       => Store_Tax::$taxonomy
-			) );
-			$percentage        = $import->get_bkg_process_percentage();
-			$percentage_pretty = 100 * $percentage;
-
+		public static function echo_style( $percentage = 0 ) {
 			?>
             <style>
                 .oml-progress-wrapper {
@@ -65,7 +58,7 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Tools' ) ) {
                     left: 0;
                     top: 0;
                     background: #cecece;
-                    width: <?php echo $percentage_pretty; ?>%;
+                    width: <?php echo $percentage; ?>%;
                     height: 100%;
                     transition: all 1s ease-in-out;
                 }
@@ -144,7 +137,7 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Tools' ) ) {
 			$percentage        = $import->get_bkg_process_percentage();
 			$percentage_pretty = 100 * $percentage;
 
-			self::echo_style();
+			self::echo_style( $percentage_pretty );
 			self::show_background_process_progress();
 
 			echo '<form method="post">';
