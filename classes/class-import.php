@@ -167,10 +167,11 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 				// Set variables for storage, fix file filename for query strings.
 				preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $file, $matches );
 				if ( ! $matches ) {
-					$image_type = exif_imagetype( $file );
-					if ( $image_type ) {
-						$fileextension = image_type_to_extension( $image_type );
-						$matches       = array( $fileextension );
+					$extension = wp_get_image_mime( $file );
+					if ( $extension !== false ) {
+						if ( preg_match( '/(jpe?g|jpe|gif|png)/i', $extension, $ext_matches ) ) {
+							$matches = array( '.' . $ext_matches[0] );
+						}
 					} else {
 						return new WP_Error( 'image_sideload_failed', __( 'Invalid image URL' ) );
 					}

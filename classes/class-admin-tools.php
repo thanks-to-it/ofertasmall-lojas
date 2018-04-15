@@ -43,6 +43,13 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Tools' ) ) {
 		}
 
 		public static function echo_style() {
+			$import            = new Import( array(
+				'stores_post_type' => Store_CPT::$post_type,
+				'stores_tax'       => Store_Tax::$taxonomy
+			) );
+			$percentage        = $import->get_bkg_process_percentage();
+			$percentage_pretty = 100 * $percentage;
+
 			?>
             <style>
                 .oml-progress-wrapper {
@@ -58,9 +65,9 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Tools' ) ) {
                     left: 0;
                     top: 0;
                     background: #cecece;
-                    width: '.$percentage_pretty.'%;
+                    width: <?php echo $percentage_pretty; ?>%;
                     height: 100%;
-                    transition:all 1s ease-in-out;
+                    transition: all 1s ease-in-out;
                 }
 
                 .oml-progress-value {
@@ -74,16 +81,16 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Tools' ) ) {
                     z-index: 2;
                 }
 
-                .oml-progress-label:after{
+                .oml-progress-label:after {
                     opacity: 0;
-                    content:url('https://media.giphy.com/media/EMspSu9w0djAA/giphy.gif');
+                    content: url('https://media.giphy.com/media/EMspSu9w0djAA/giphy.gif');
                     display: inline-block;
                     margin-left: 13px;
                     vertical-align: middle;
-                    transition:all 1s ease-in-out;
+                    transition: all 1s ease-in-out;
                 }
 
-                .oml-progress-label.progress:after{
+                .oml-progress-label.progress:after {
                     opacity: 1;
                 }
             </style>
@@ -105,8 +112,8 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Tools' ) ) {
                         };
                         jQuery.post(ajaxurl, data, function (response) {
                             count++;
-                            percent = Math.round(response.data.percent*100);
-                            if(percent>0 && percent<100){
+                            percent = Math.round(response.data.percent * 100);
+                            if (percent > 0 && percent < 100) {
                                 jQuery('.oml-progress-label').addClass('progress');
                             }
                             $('.oml-progress-bar').css('width', percent + '%');
@@ -117,7 +124,7 @@ if ( ! class_exists( 'TxToIT\OML\Admin_Tools' ) ) {
                     oml_interval = setInterval(handle_interval, 3000);
 
                     function handle_interval() {
-                        if (percent < 100 && !no_queue && percent > 0 || count ==0) {
+                        if (percent < 100 && !no_queue && percent > 0 || count == 0) {
                             oml_call_ajax();
                         } else {
                             jQuery('.oml-progress-label').removeClass('progress');
