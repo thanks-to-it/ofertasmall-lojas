@@ -288,9 +288,11 @@ if ( ! class_exists( 'TxToIT\OML\Import' ) ) {
 				'post_type'     => $this->import_args['stores_post_type'],
 				'post_title'    => $store['nome'],
 				'post_name'     => sanitize_title( $store['nome'] ),
+				'post_modified' => $store['atualizado'],
 				//'post_name'     => $store['slug'],
 				'post_date'     => $store['criado'],
-				'post_modified' => $store['atualizado'],
+				'post_date_gmt' => get_gmt_from_date( $store['criado'] ),
+
 				'post_status'   => $store['ativo'] == 1 ? 'publish' : 'draft',
 				'meta_input'    => $metas
 			);

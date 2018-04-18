@@ -42,6 +42,7 @@ if ( ! class_exists( 'TxToIT\OML\Ofertasmall_Stores_API' ) ) {
 			$ch = curl_init( add_query_arg( $args, $this->url_get_lojas ) );
 
 			curl_setopt_array( $ch, array(
+				CURLOPT_FOLLOWLOCATION =>true,
 				CURLOPT_CUSTOMREQUEST  => 'GET',
 				CURLOPT_HTTPHEADER     => array(
 					"authorization: {$token}"
