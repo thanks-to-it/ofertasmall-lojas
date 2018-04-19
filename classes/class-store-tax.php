@@ -21,17 +21,17 @@ if ( ! class_exists( 'TxToIT\OML\Store_Tax' ) ) {
 		public static function register_taxonomy( $cpt ) {
 			// Add new taxonomy, make it hierarchical (like categories)
 			$labels = array(
-				'name'              => _x( 'Categories', 'taxonomy general name', 'textdomain' ),
-				'singular_name'     => _x( 'Category', 'taxonomy singular name', 'textdomain' ),
-				'search_items'      => __( 'Search Categories', 'textdomain' ),
-				'all_items'         => __( 'Categories', 'textdomain' ),
-				'parent_item'       => __( 'Parent Category', 'textdomain' ),
-				'parent_item_colon' => __( 'Parent Category:', 'textdomain' ),
-				'edit_item'         => __( 'Edit Category', 'textdomain' ),
-				'update_item'       => __( 'Update Category', 'textdomain' ),
-				'add_new_item'      => __( 'Add New Category', 'textdomain' ),
-				'new_item_name'     => __( 'New Category Name', 'textdomain' ),
-				'menu_name'         => __( 'Category', 'textdomain' ),
+				'name'              => _x( 'Categories', 'taxonomy general name', 'ofertasmall-lojas' ),
+				'singular_name'     => _x( 'Category', 'taxonomy singular name', 'ofertasmall-lojas' ),
+				'search_items'      => __( 'Search Categories', 'ofertasmall-lojas' ),
+				'all_items'         => __( 'Categories', 'ofertasmall-lojas' ),
+				'parent_item'       => __( 'Parent Category', 'ofertasmall-lojas' ),
+				'parent_item_colon' => __( 'Parent Category:', 'ofertasmall-lojas' ),
+				'edit_item'         => __( 'Edit Category', 'ofertasmall-lojas' ),
+				'update_item'       => __( 'Update Category', 'ofertasmall-lojas' ),
+				'add_new_item'      => __( 'Add New Category', 'ofertasmall-lojas' ),
+				'new_item_name'     => __( 'New Category Name', 'ofertasmall-lojas' ),
+				'menu_name'         => __( 'Category', 'ofertasmall-lojas' ),
 			);
 
 			$args = array(
@@ -40,7 +40,7 @@ if ( ! class_exists( 'TxToIT\OML\Store_Tax' ) ) {
 				'show_ui'           => true,
 				'show_admin_column' => true,
 				'query_var'         => true,
-				'rewrite'           => array( 'slug' => 'categoria' ),
+				'rewrite'           => array( 'slug' => 'lojas-categorias' ),
 			);
 
 			register_taxonomy( self::$taxonomy, array( $cpt ), $args );
